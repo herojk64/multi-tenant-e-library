@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Jobs\MigrateTenantTables;
+use Database\Seeders\TenantSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Crypt;
@@ -12,7 +13,7 @@ use Spatie\Multitenancy\Models\Tenant as SpatieTenantModel;
 class Tenant extends SpatieTenantModel
 {
     protected $fillable = [
-        'name', 'email', 'domain', 'database', 'database_username', 'database_password'
+        'user_id','name', 'email', 'domain', 'database', 'database_username', 'database_password','is_active'
     ];
 
     protected static function booted()
@@ -39,6 +40,7 @@ class Tenant extends SpatieTenantModel
         $this->database = $dbname;
         $this->database_username = $username;
         $this->database_password = Crypt::encrypt($password);
+        $this->user_id = auth()->user()->id;
 
     }
 
@@ -70,5 +72,14 @@ class Tenant extends SpatieTenantModel
     public function getDisplayDatabasePasswordAttribute()
     {
         return Crypt::decrypt($this->database_password);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(TenantService::class,'tenant_id');
+    }
+
+    public function users(){
+        return $this->hasOne(User::class);
     }
 }

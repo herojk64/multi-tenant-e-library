@@ -29,6 +29,7 @@ class SwitchTenantDatabaseCustomTask extends SwitchTenantDatabaseTask
 
         $config_tenant_database_name = $this->tenantDatabaseConnectionName();
         $config_landlord_database_name = $this->landlordDatabaseConnectionName();
+
         if($config_tenant_database_name === $config_landlord_database_name){
             throw InvalidConfiguration::tenantConnectionIsEmptyOrEqualsToLandlordConnection();
         }
@@ -41,23 +42,7 @@ class SwitchTenantDatabaseCustomTask extends SwitchTenantDatabaseTask
             "database.connections.{$config_tenant_database_name}.database"=>$database_name,
            "database.connections.{$config_tenant_database_name}.username"=>$database_username,
             "database.connections.{$config_tenant_database_name}.password"=>$database_password,
-
         ]);
-
-        app('db')->extend($config_tenant_database_name, function ($config, $name) use ($database_name, $database_username, $database_password) {
-            $config['database'] = $database_name;
-            $config['username'] = $database_username;
-            $config['password'] = $database_password;
-
-            return app('db.factory')->make($config, $name);
-        });
-
-        DB::purge($config_tenant_database_name);
-
-        Model::setConnectionResolver(app('db'));
-
-        config(['app.name' => $tenant->name]);
-
     }
 
     public function forgetCurrent(): void

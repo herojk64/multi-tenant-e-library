@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.appearance-none:checked {
+    @apply bg-light-1;
+}
+
+.border-b {
+    @apply border-b-light-1;
+}
+
+.focus-visible\:outline-none:focus-visible {
+    @apply outline-none;
+}
+
+.App{
+    display: grid;
+    grid-auto-rows: auto 1fr auto;
+}

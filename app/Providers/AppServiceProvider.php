@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Settings;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Multitenancy\Models\Tenant;
 

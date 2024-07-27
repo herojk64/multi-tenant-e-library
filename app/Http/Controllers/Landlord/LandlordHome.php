@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Landlord;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class LandLordHomePage extends Controller
+class LandlordHome extends Controller
 {
     public function index()
     {

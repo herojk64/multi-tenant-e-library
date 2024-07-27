@@ -18,7 +18,6 @@ class TenantSeeder extends Seeder
     public function run(): void
     {
         $tenant = Tenant::current();
-        dd($tenant);
         $randomPassword = Str::random(8);
         User::create([
            'name' => $tenant->name." Admin",

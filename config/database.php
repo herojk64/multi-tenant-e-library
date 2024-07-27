@@ -29,7 +29,15 @@ return [
     */
 
     'connections' => [
-
+//TODO: for generating the correcct resource for filament packet temp
+//        'tenant' => [
+//            'driver' => 'mysql',
+//            'database' => "library",
+//            'host' => '127.0.0.1',
+//            'port'=>'3306',
+//            'username' => 'root',
+//            'password' => 'password',
+//        ],
         'tenant' => [
             'driver' => 'mysql',
             'database' => "",

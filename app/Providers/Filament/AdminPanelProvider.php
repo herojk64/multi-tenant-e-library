@@ -2,6 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\AdminPanelResource\Widgets\ServicesChart;
+use App\Filament\Resources\AdminPanelResource\Widgets\TenantPending;
+use App\Filament\Resources\LandlordServicesResource;
+use App\Filament\Resources\TenantResource;
+use App\Filament\Resources\UserResource;
+use App\Http\Middleware\LandlordPannelMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -25,22 +31,28 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('')
+            ->path('/admin')
             ->domain(config('multitenancy.landlord_url'))
             ->login()
             ->spa()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#03001C'),
+                'gray'=> Color::hex('#301E67'),
+                'info'=> Color::hex('#B6EADA')
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->resources([
+                UserResource::class,
+                TenantResource::class,
+                LandlordServicesResource::class
+            ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                ServicesChart::class,
+                TenantPending::class
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -54,7 +66,9 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
+                LandlordPannelMiddleware::class,
                 Authenticate::class,
-            ]);
+            ])
+            ;
     }
 }

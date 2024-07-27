@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Defaults
+    | LandlordAuthentication Defaults
     |--------------------------------------------------------------------------
     |
     | This option defines the default authentication "guard" and password
@@ -20,7 +20,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Guards
+    | LandlordAuthentication Guards
     |--------------------------------------------------------------------------
     |
     | Next, you may define every authentication guard for your application.
@@ -96,6 +96,11 @@ return [
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'landlords' => [
+            'provider' => 'users', // Assuming 'users' provider handles all user types
+            'table' => 'password_resets', // Use the same password resets table
+            'expire' => 60,
         ],
     ],
 

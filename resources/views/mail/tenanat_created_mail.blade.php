@@ -96,7 +96,7 @@
                                                                         <center style='color:#ffffff; font-family:arial, "helvetica neue", helvetica, sans-serif; font-size:14px; font-weight:400; line-height:14px;  mso-text-raise:1px'>Button</center>
                                                                     </v:roundrect></a>
                                                                 <![endif]--><!--[if !mso]><!-- --><span class="es-button-border">
-            <a href="{{$tenant->domain}}" class="es-button" target="_blank">Click here to visit</a>
+            <a href="http://{{$tenant->domain}}" class="es-button" target="_blank">Click here to visit</a>
         </span><!--<![endif]-->
                                                             </td>
                                                         </tr></tbody></table>

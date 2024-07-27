@@ -17,7 +17,7 @@ class TenantResource extends Resource
 {
     protected static ?string $model = Tenant::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
     public static function form(Form $form): Form
     {
@@ -25,7 +25,8 @@ class TenantResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                ,
                 Forms\Components\TextInput::make('domain')
                     ->required()
                     ->maxLength(255),
@@ -45,9 +46,15 @@ class TenantResource extends Resource
                 Tables\Columns\TextColumn::make('domain')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('database')
-                    ->searchable(),
+                    ->searchable()->toggleable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                ->label('Active')
+                ->action(function($record,$action){
+                    dd($record);
+                })
+                ,
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -61,7 +68,7 @@ class TenantResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make('View'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -81,8 +88,7 @@ class TenantResource extends Resource
     {
         return [
             'index' => Pages\ListTenants::route('/'),
-            'create' => Pages\CreateTenant::route('/create'),
-            'edit' => Pages\EditTenant::route('/{record}/edit'),
-        ];
+//            'view'=>Pages\ViewTenants::route('/view')
+            ];
     }
 }

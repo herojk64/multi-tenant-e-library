@@ -27,7 +27,6 @@ class MigrateTenantTables implements ShouldQueue
      */
     public function handle(): void
     {
-        dd(Tenant::current());
         $this->tenant->runMigration();
     }
 }
