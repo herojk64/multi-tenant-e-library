@@ -35,15 +35,13 @@ class SendTenantCreatedMail extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content(): Content
+    public function build()
     {
-        return new Content(
-            view: 'mail.tenanat_created_mail',
-            with: [
+        return $this->markdown('emails.landlord.tenanat_created_mail')
+            ->with([
                 'password' => $this->password,
-                'tenant' => $this->tenant,
-            ],
-        );
+                'tenant'=>$this->tenant
+            ]);
     }
 
     /**

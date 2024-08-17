@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\LandlordAuthentication;
+use App\Http\Controllers\Landlord\LandlordAuthentication;
 use App\Http\Controllers\Landlord\LandlordHome;
-use App\Http\Controllers\LandlordServiceController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Landlord\LandlordProfileDashboard;
+use App\Http\Controllers\Landlord\LandlordServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::domain(config('multitenancy.landlord_url'))->group(callback: function (){
@@ -17,17 +17,29 @@ Route::domain(config('multitenancy.landlord_url'))->group(callback: function (){
         Route::post('register','store');
         Route::get('password/forget','forget')->name('password.request');
         Route::post('password/forget','sendForgetPasswordConfirmation')->name('password.email');
-        Route::get('reset-password/{token}','reset_view')->middleware('guest')->name('password.reset');
-        Route::post('reset-password','resetPassword')->middleware('guest')->name('password.update');
+        Route::get('reset-password/{token}','reset_view')->name('password.reset');
+        Route::put('reset-password','resetPassword')->name('password.update');
         Route::post('logout','logout')->withoutMiddleware('guest')->middleware('auth:web')->name('logout');
     });
 
+    Route::get('about',[\App\Http\Controllers\Landlord\AboutUsController::class,'index'])->name('about');
+//
     Route::controller(LandlordServiceController::class)->group(function(){
         Route::get('services','index')->name('services');
-        Route::get('services/{id}/pay','pay')->middleware('auth')->name('pay');
-        Route::post('services/{id}/pay','store')->middleware('auth')->name('pay-services');
+        Route::get('services/{landlordServices}/pay','pay')->middleware('auth')->name('services.pay');
+        Route::post('services/{landlordServices}/pay','store')->middleware('auth')->name('services.pay-services');
+        Route::get('services/{tenant}','select')->middleware('auth')->name('services.select');
+        Route::get('services/{tenant}/pay/{landlordServices}','updateView')->middleware('auth')->name('services.update-view');
+        Route::post('services/{tenant}/pay/{landlordServices}','update')->middleware('auth')->name('services.update');
     });
 
+
+    Route::controller(LandlordProfileDashboard::class)->middleware('auth')->group(function(){
+        Route::get('profile','index')->name('profile');
+        Route::put('profile','changePassword')->name('profile.update-password');
+        Route::get('dashboard','services')->name('dashboard');
+        Route::get('dashboard/view/{tenant}','view')->name('dashboard.view');
+    });
 
 });
 

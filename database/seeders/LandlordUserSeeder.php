@@ -14,12 +14,17 @@ class LandlordUserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(5);
+        User::factory(5)->create();
         User::create([
             'name'=>'admin',
             'email'=>'admin@admin.com',
             'password'=>'password',
             'type'=>UserType::LANDLORD
+        ]);
+        User::create([
+            'name'=>'user',
+            'email'=>'example@example.com',
+            'password'=>'password',
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enum\ServicesType;
 use App\Models\LandlordServices;
 use App\Models\User;
 
@@ -16,6 +17,11 @@ class LandlordServicesSeeder extends Seeder
      */
     public function run(): void
     {
-        LandlordServices::factory(5)->create();
+        LandlordServices::factory(5)->create([
+            'type'=>ServicesType::MONTHLY
+        ]);
+        LandlordServices::factory(5)->create([
+            'type'=>ServicesType::YEARLY
+        ]);
     }
 }

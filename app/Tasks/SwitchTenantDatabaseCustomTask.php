@@ -43,6 +43,8 @@ class SwitchTenantDatabaseCustomTask extends SwitchTenantDatabaseTask
            "database.connections.{$config_tenant_database_name}.username"=>$database_username,
             "database.connections.{$config_tenant_database_name}.password"=>$database_password,
         ]);
+
+        DB::setDefaultConnection($config_tenant_database_name);
     }
 
     public function forgetCurrent(): void

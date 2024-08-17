@@ -1,41 +1,69 @@
-<x-app-layout>
-    <x-landlord.content_wrapper :overlay="true" :bg="asset('storage/landlord_login_bg.png')" class="flex justify-end items-center h-full" style="
-    background-size: cover;
-    min-height: auto;
-    padding:0;
-    ">
-        <main class="bg-black bg-opacity-50 w-full md:w-1/2 lg:w-1/3 py-20 px-9 h-full">
+<x-landlord-app-layout>
+    <main class="flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-8 border border-gray-300 rounded-lg shadow-lg" data-aos="fade-up">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center">
+                Forgot Your Password?
+            </h2>
+            <p class="text-gray-500 text-center">
+                Enter your email address and we'll send you a link to reset your password.
+            </p>
 
-            <header class="mb-11 font-libre" style="font-size: 2rem">
-                {{ __('Reset Password') }}</header>
+            <!-- Success Message -->
+            @if (session('status'))
+                <div class="bg-green-100 text-green-800 border border-green-300 rounded-lg p-4 mb-4">
+                    {{ session('status') }}
+                </div>
+            @endif
 
+            <!-- Validation Errors -->
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-800 border border-red-300 rounded-lg p-4 mb-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-                    @if (session('status'))
-                        <x-alertbox role="alert">
-                            {{ session('status') }}
-                        </x-alertbox>
-                    @endif
+            <form method="POST" action="{{ route('landlord.password.email') }}" class="space-y-6">
+                @csrf
 
-                    <form method="POST" action="{{ route('landlord.password.request') }}">
-                        @csrf
+                <!-- Email Field -->
+                <div>
+                    <x-landlord.form.label for="email">
+                        Email Address:
+                    </x-landlord.form.label>
+                    <x-landlord.form.input
+                        type="email"
+                        name="email"
+                        value="{{old('email')}}"
+                        id="email"
+                        placeholder="Enter your email"
+                        autofill="email"
+                        autoselect
+                        required
+                        class="w-full"
+                    />
+                </div>
 
-                        <div class="mb-3">
-                            <x-landlord.form.input
-                                label="Email Address"
-                                type="email"
-                                name="email"
-                                class=""
-                                autocomplete="email"
-                                autofocus
-                            />
-                        </div>
+                <!-- Submit Button -->
+                <div>
+                    <button
+                        type="submit"
+                        class="w-full bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 transition duration-300 ease-in-out"
+                    >
+                        Send Password Reset Link
+                    </button>
+                </div>
 
-                        <div class="mb-0">
-                            <x-landlord.form.button type="submit">
-                                Request
-                            </x-landlord.form.button>
-                        </div>
-                    </form>
-        </main>
-    </x-landlord.content_wrapper>
-</x-app-layout>
+                <!-- Back to Login Link -->
+                <div class="text-center">
+                    <a href="{{ route('landlord.login') }}" class="text-blue-500 hover:underline">
+                        Back to Login
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</x-landlord-app-layout>

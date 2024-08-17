@@ -14,7 +14,15 @@ return new class extends Migration
         Schema::create('tenant_services', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tenant_id');
-            $table->json('service');
+            $table->string('title');
+            $table->longText('description');
+            $table->enum('type',['yearly','monthly']);
+            $table->bigInteger('duration');
+            $table->bigInteger('amount');
+            $table->bigInteger('discount');
+            $table->bigInteger('total');
+            $table->enum('status',['active','inactive','expired']);
+            $table->date('activation_date')->nullable()->default(null);
             $table->timestamps();
         });
     }

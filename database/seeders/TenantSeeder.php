@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Mail\SendTenantCreatedMail;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Tasks\SwitchTenantDatabaseCustomTask;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Mail;
@@ -19,6 +20,7 @@ class TenantSeeder extends Seeder
     {
         $tenant = Tenant::current();
         $randomPassword = Str::random(8);
+
         User::create([
            'name' => $tenant->name." Admin",
             'email' => $tenant->email,

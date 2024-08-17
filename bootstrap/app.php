@@ -17,9 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up'
     )
     ->withMiddleware(function (Middleware $middleware) {
+
         $middleware->appendToGroup('tenant',[
             \Spatie\Multitenancy\Http\Middleware\NeedsTenant::class,
             \Spatie\Multitenancy\Http\Middleware\EnsureValidTenantSession::class,
+        ]);
+        $middleware->appendToGroup('web',[
+            \App\Http\Middleware\SetHostForTesting::class
         ]);
 
         $middleware->redirectGuestsTo('/login');

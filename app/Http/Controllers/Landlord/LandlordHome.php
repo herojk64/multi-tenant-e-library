@@ -9,6 +9,6 @@ class LandlordHome extends Controller
 {
     public function index()
     {
-        return view('landlord.index');
+        return view('landlord.home');
     }
 }

@@ -1,48 +1,85 @@
-<x-app-layout>
-    <x-landlord.content_wrapper :overlay="true" :bg="asset('storage/landlord_login_bg.png')" class="flex justify-end items-center h-full" style="
-    background-size: cover;
-    min-height: auto;
-    padding:0;
-    ">
-    <main class="bg-black bg-opacity-50 w-full md:w-1/2 lg:w-1/3 py-20 px-9 h-full">
+<x-landlord-app-layout>
+    <main class="flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-8 border border-gray-300 rounded-lg shadow-lg" data-aos="fade-up">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center">
+                Reset Your Password
+            </h2>
+            <p class="text-gray-500 text-center">
+                Please enter your new password below.
+            </p>
 
-                    <form method="POST" action="{{ route('landlord.password.update') }}">
-                        @csrf
-                        <header class="mb-11 font-libre" style="font-size: 2rem">Reset Password</header>
-                        <input type="hidden" name="token" value="{{ $token }}">
-                        <input type="hidden" name="email" value="{{$email}}">
+            <!-- Success Message -->
+            @if (session('status'))
+                <div class="bg-green-100 text-green-800 border border-green-300 rounded-lg p-4 mb-4">
+                    {{ session('status') }}
+                </div>
+            @endif
 
-                        @foreach($errors as $error)
-                        <div>
-                            {{$error->message}}
-                        </div>
+            <!-- Validation Errors -->
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-800 border border-red-300 rounded-lg p-4 mb-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
                         @endforeach
-                        <div class="mb-14">
-                            <x-landlord.form.input
-                                type="password"
-                                name="password"
-                                id="password"
-                                label="Password"
-                                required
-                            />
+                    </ul>
+                </div>
+            @endif
 
+            <form method="POST" action="{{ route('landlord.password.update') }}" class="space-y-6">
+                @csrf
+                @method('put')
 
-                        </div>
+                <input type="hidden" value="{{$email}}" name="email" />
+                <input type="hidden" value="{{$token}}" name="token"/>
 
-                        <div class="mb-4">
-                            <x-landlord.form.input
-                                type="password"
-                                name="password_confirmation"
-                                id="password-confirm"
-                                label="Confirm Password"
-                                required
-                            />
-                        </div>
-                        <x-landlord.form.button type="submit">
-                            Reset Password
-                        </x-landlord.form.button>
-                    </form>
+                <!-- Password Field -->
+                <div>
+                    <x-landlord.form.label for="password">
+                        New Password:
+                    </x-landlord.form.label>
+                    <x-landlord.form.input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter your new password"
+                        required
+                        class="w-full"
+                    />
+                </div>
 
+                <!-- Confirm Password Field -->
+                <div>
+                    <x-landlord.form.label for="password_confirmation">
+                        Confirm Password:
+                    </x-landlord.form.label>
+                    <x-landlord.form.input
+                        type="password"
+                        name="password_confirmation"
+                        id="password_confirmation"
+                        placeholder="Confirm your new password"
+                        required
+                        class="w-full"
+                    />
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button
+                        type="submit"
+                        class="w-full bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 transition duration-300 ease-in-out"
+                    >
+                        Reset Password
+                    </button>
+                </div>
+
+                <!-- Back to Login Link -->
+                <div class="text-center">
+                    <a href="{{ route('landlord.login') }}" class="text-blue-500 hover:underline">
+                        Back to Login
+                    </a>
+                </div>
+            </form>
+        </div>
     </main>
-    </x-landlord.content_wrapper>
-</x-app-layout>
+</x-landlord-app-layout>
