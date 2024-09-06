@@ -15,7 +15,8 @@ class EditCategory extends EditRecord
     {
         return [
             Actions\DeleteAction::make()->visible(function($record){
-                return isEmpty($record->books);
+
+                return empty($record->books);
             }),
         ];
     }

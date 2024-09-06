@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Books extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','category_id','author_name','published_date','description','file_path','file_type','type'];
+    protected $fillable = ['thumbnail','title','category_id','author_name','published_date','description','file','type'];
 
     protected $casts = ['type'=>BookType::class];
 

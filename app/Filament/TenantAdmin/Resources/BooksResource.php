@@ -26,27 +26,48 @@ class BooksResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Section::make([
 
                     Forms\Components\TextInput::make('title'),
-                    Forms\Components\Textarea::make('description'),
-                    Forms\Components\TextInput::make('author_name')->label('Author Name'),
-                    Forms\Components\DatePicker::make('published_date')->label('published Date'),
-                    Forms\Components\Select::make('Category')
+                    Forms\Components\Textarea::make('description')->rows(5),
+                    Forms\Components\Grid::make(2)->schema([
 
-                ->searchable()
-                ->getSearchResultsUsing(fn(string $search):array=>Category::where('name', 'like', "%{$search}%")->limit(50)->pluck('name','id')->toArray())
-                 ->relationship('category_id')
-                ,
-                    Forms\Components\Select::make('type')
-                    ->options([
-                        BookType::FREE->value =>Str::headline(BookType::FREE->value),
-                        BookType::SUBSCRIBED->value =>Str::headline(BookType::SUBSCRIBED->value)
+                        Forms\Components\TextInput::make('author_name')->label('Author Name'),
+                        Forms\Components\DatePicker::make('published_date')->label('Published Date'),
+                    ]),
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\Select::make('category_id')
+                            ->label('Category')
+                            ->relationship('category', 'name')
+                        ,
+                        Forms\Components\Select::make('type')
+                            ->options([
+                                BookType::FREE->value => Str::headline(BookType::FREE->value),
+                                BookType::SUBSCRIBED->value => Str::headline(BookType::SUBSCRIBED->value)
+                            ])
+                            ->label('Type')
+                    ]),
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\FileUpload::make('file')
+                            ->label('Book/Audio')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->directory('books')
+                            ->disk('public')
+                            ->openable()
+                            ->columnSpan(2)
+                        ->previewable()
+                        ,
+                        Forms\Components\FileUpload::make('thumbnail')
+                        ->image()
+                        ->imageEditor()
+                            ->columnSpan(2)
+                            ->previewable()
+                            ->openable()
+                            ->directory('thumbnails')
+                            ->disk('public')
                     ])
-                        ->label('Type'),
-                Forms\Components\FileUpload::make('file')
-                    ->label('Book/Audio')
-                    ->directory('books')
-                    ->disk('local')
+
+                ]),
 
             ]);
     }
@@ -55,10 +76,22 @@ class BooksResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')->label('Title')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('description')->label('Description')->limit(50)->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('author_name')->label('Author Name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('published_date')->label('Published Date')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('category.name')->label('Category')->sortable()->searchable(),
+                Tables\Columns\ImageColumn::make('thumbnail')->disk('public'),
+                Tables\Columns\TextColumn::make('type')->label('Type')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->label('Created At')->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')->label('Updated At')->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')->options([
+                    BookType::FREE->value => Str::headline(BookType::FREE->value),
+                    BookType::SUBSCRIBED->value => Str::headline(BookType::SUBSCRIBED->value)
+                ]),
+                Tables\Filters\SelectFilter::make('category_id')->relationship('category', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

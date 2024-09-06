@@ -7,6 +7,7 @@ use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Spatie\Multitenancy\Models\Tenant;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +33,9 @@ class AppServiceProvider extends ServiceProvider
         DB::setDefaultConnection($type);
 
         if($type === "tenant"){
+            $tenant = Tenant::current();
             $this->checkTenantActive();
+
         }
 
         Gate::define('landlord.admin',function(User $user){

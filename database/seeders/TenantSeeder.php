@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enum\UserType;
 use App\Mail\SendTenantCreatedMail;
+use App\Models\Books;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Tasks\SwitchTenantDatabaseCustomTask;
@@ -25,7 +27,9 @@ class TenantSeeder extends Seeder
            'name' => $tenant->name." Admin",
             'email' => $tenant->email,
             'password' => $randomPassword,
+            'type'=>UserType::ADMIN
         ]);
+        Books::factory(50)->create();
         Mail::to($tenant->email)->queue(new SendTenantCreatedMail($tenant,$randomPassword));
     }
 }

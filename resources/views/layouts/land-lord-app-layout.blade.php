@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{config('app.name')}} {{isset($title)?'| '.$title:''}}</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
+
     @stack('styles')
+
     @filamentStyles
 </head>
 <body class="grid grid-rows-[auto_1fr_auto] bg-gray-100 min-h-screen margin-0 padding-0">
@@ -15,8 +18,7 @@
 {{$slot}}
 <x-landlord.partials._footer />
 <x-toaster-hub />
-@vite('resources/js/app.js')
-@stack('styles')
+@stack('js')
 @filamentScripts
 </body>
 </html>

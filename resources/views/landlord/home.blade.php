@@ -1,7 +1,7 @@
 <x-landlord-app-layout>
     <main class="bg-gray-100">
         <!-- Hero Section -->
-        <section class="bg-white shadow-lg p-8 mb-8 w-full flex flex-col items-center justify-center min-h-[70vh] bg-[url('../assets/landlord_home_image_1.png')]" data-aos="fade-up">
+        <section class="bg-white shadow-lg p-8 mb-8 w-full flex flex-col items-center justify-center min-h-[70vh] bg-[url('../assets/landlord_home_image_1.png')] bg-fixed">
             <header class="text-4xl text-white font-bold mb-4">
                 Welcome to {{ config('app.name') }}
             </header>

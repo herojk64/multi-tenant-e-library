@@ -4,6 +4,7 @@ namespace App\Tasks;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Spatie\Multitenancy\Exceptions\InvalidConfiguration;
 use Spatie\Multitenancy\Models\Tenant;
 use Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask;
@@ -45,6 +46,12 @@ class SwitchTenantDatabaseCustomTask extends SwitchTenantDatabaseTask
         ]);
 
         DB::setDefaultConnection($config_tenant_database_name);
+
+
+            config([
+                'app.name' => Str::headline($tenant?->name ?? config('app.name')) ,
+                'app.url' => "http://" . ($tenant?->domain ?? config('app.url')),
+                ]);
     }
 
     public function forgetCurrent(): void

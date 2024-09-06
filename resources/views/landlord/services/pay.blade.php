@@ -39,7 +39,7 @@
                 class="w-full"
                 x-model="domain"
                 />
-                <div><span x-text="domain"></span>.{{config('app.url')}}</div>
+                <div><span x-text="domain"></span>.{{parse_url(config('app.url'))['host']}}</div>
 
 
                 <x-landlord.form.error name="domain" />

@@ -32,7 +32,7 @@ class LandlordServiceController extends Controller
         ]);
 
         $name = strtolower($attributes['domain']);
-        $domain = $name.".".config('app.url');
+        $domain = $name.".".parse_url(config('app.url'))['host'];
 
         $tenantExists = Tenant::where('domain', $domain)->exists();
 
