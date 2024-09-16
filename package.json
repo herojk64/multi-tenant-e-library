@@ -19,6 +19,9 @@
     "dependencies": {
         "alpinejs": "^3.14.1",
         "aos": "^2.3.4",
-        "hover.css": "^2.3.2"
+        "hover.css": "^2.3.2",
+        "pdfjs": "^2.5.3",
+        "pdfjs-dist": "^4.6.82",
+        "pspdfkit": "^2024.5.1"
     }
 }

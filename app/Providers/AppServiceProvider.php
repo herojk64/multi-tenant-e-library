@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Enum\BookType;
 use App\Enum\UserType;
+use App\Models\Books;
 use App\Models\Settings;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -32,19 +35,29 @@ class AppServiceProvider extends ServiceProvider
         config(['database.default' => $type]);
         DB::setDefaultConnection($type);
 
-        if($type === "tenant"){
-            $tenant = Tenant::current();
-            $this->checkTenantActive();
+        if ($type === "tenant") {
+            $this->loadTenantSettings();
 
+            $setting = Cache::get('tenant.settings');
+
+            if ($setting && $setting['site_name']) {
+                config([
+                    'app.name' => $setting['site_name'], // Update the app name configuration
+                ]);
+            }
         }
 
-        Gate::define('landlord.admin',function(User $user){
-            return $user->type === UserType::LANDLORD;
+        $this->setGates();
+    }
+
+    protected function loadTenantSettings(): void
+    {
+        // Try to fetch settings from the cache; if not available, load from DB
+        Cache::remember('tenant.settings', 3600, function () {
+            return Settings::all()->pluck('value', 'key');
         });
 
-        Gate::define('admin',function(User $user){
-           return $user->type === UserType::ADMIN;
-        });
+
     }
 
     public function checkTenantActive()
@@ -53,5 +66,35 @@ class AppServiceProvider extends ServiceProvider
         if($tenant && !$tenant->is_active){
             abort(404);
         }
+    }
+
+    public function setGates()
+    {
+        Gate::define('landlord.admin',function(User $user){
+        return $user->type === UserType::LANDLORD;
+    });
+
+        Gate::define('admin',function(User $user){
+            return $user->type === UserType::ADMIN;
+        });
+
+        Gate::define('view-content', function (User $user, Books $book) {
+            // Assuming you want to check if the book requires a subscription
+            if (!auth()->check()) {
+                return false;
+            }
+
+            if ($user->type === UserType::ADMIN) {
+                return true;
+            }
+
+            if ($book->type === BookType::FREE) {
+                return true;
+            }
+
+            // Check if the user is subscribed (you can add your own logic here)
+            return auth()->user()->status;
+        });
+
     }
 }

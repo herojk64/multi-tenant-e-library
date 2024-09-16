@@ -18,7 +18,7 @@ class LandlordServicesResource extends Resource
     protected static ?string $model = LandlordServices::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
-    protected static ?string $label = 'Services';
+    protected static ?string $label = 'ServicesReview';
 
     public static function form(Form $form): Form
     {
@@ -41,6 +41,7 @@ class LandlordServicesResource extends Resource
                 Forms\Components\TextInput::make('discount')
                     ->required()
                     ->numeric()->default(0),
+
             ]);
     }
 

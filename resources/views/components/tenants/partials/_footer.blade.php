@@ -14,7 +14,7 @@
                 </li>
 {{--                <li class="w-full">--}}
 {{--                    <a href="{{route('landlord.services')}}" class="py-3 block md:text-center text-gray-500 active:text-gray-800 hover:text-gray-800 underline">--}}
-{{--                        Services--}}
+{{--                        ServicesReview--}}
 {{--                    </a>--}}
 {{--                </li>--}}
                 <li class="w-full">
@@ -27,16 +27,20 @@
         <div>
             <header class="mb-3 text-xl font-bold text-gray-500">Support</header>
             <ul>
+                @if(cache('tenant.settings')['contact_email'])
                 <li class="w-full">
                     <a href="mailto:herojk64@gmail.com" class="py-3 block text-gray-500 hover:text-gray-800 underline">
-                        Email Support
+                        Email Support : {{cache('tenant.settings')['contact_email']}}
                     </a>
                 </li>
+                @endif
+                @if(cache('tenant.settings')['contact_number'])
                 <li class="w-full">
-                    <a href="tel:+9779801109082" class="py-3 block text-gray-500 hover:text-gray-800 underline">
-                        Call Us: +977 9801109082
+                    <a href="tel:{{cache('tenant.settings')['contact_number']}}" class="py-3 block text-gray-500 hover:text-gray-800 underline">
+                        Call Us: {{cache('tenant.settings')['contact_number']}}
                     </a>
                 </li>
+                    @endif
 
             </ul>
         </div>

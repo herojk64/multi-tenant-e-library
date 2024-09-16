@@ -29,7 +29,7 @@ class TenantSeeder extends Seeder
             'password' => $randomPassword,
             'type'=>UserType::ADMIN
         ]);
-        Books::factory(50)->create();
+//        Books::factory(50)->create();
         Mail::to($tenant->email)->queue(new SendTenantCreatedMail($tenant,$randomPassword));
     }
 }

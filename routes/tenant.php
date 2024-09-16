@@ -11,6 +11,7 @@ Route::controller(\App\Http\Controllers\Tenants\BooksController::class)->group(f
     // web.php
 
     Route::get('/books/{book}', 'show')->name('books.show');
+    Route::get('/books/pdf/{file}',  'generateBlob')->name('books.generateBlob');
 
 });
 
@@ -30,6 +31,13 @@ Route::controller(\App\Http\Controllers\Tenants\AuthController::class)->middlewa
 Route::controller(\App\Http\Controllers\Tenants\ProfileDashboard::class)->middleware('auth')->group(function(){
     Route::get('profile','index')->name('profile');
     Route::put('profile','changePassword')->name('profile.update-password');
-//    Route::get('dashboard','services')->name('dashboard');
-//    Route::get('dashboard/view/{tenant}','view')->name('dashboard.view');
+    Route::get('dashboard','services')->name('dashboard');
+    Route::get('dashboard/view/{tenant}','view')->name('dashboard.view');
+});
+
+
+Route::controller(\App\Http\Controllers\Tenants\UserServicesController::class)->group(function(){
+    Route::get('services','index')->name('services');
+    Route::get('services/{service}/pay','pay')->middleware('auth')->name('services.pay');
+    Route::post('services/{service}/pay','store')->middleware('auth')->name('services.pay-services');
 });

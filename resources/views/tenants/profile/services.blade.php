@@ -1,8 +1,8 @@
-<x-landlord-app-layout>
+<x-tenant-app-layout>
     <div class="grid grid-cols-[auto_1fr] gap-4 mx-2">
 
         <!-- Sidebar -->
-        <x-landlord.partials._sidenavbar class="border-r border-gray-200" />
+        <x-tenants.partials._sidenavbar class="border-r border-gray-200" />
 
         <!-- Main Content -->
         <main class="p-6 bg-white rounded-lg shadow-md overflow-x-auto space-y-8">
@@ -36,4 +36,4 @@
             </div>
         </main>
     </div>
-</x-landlord-app-layout>
+</x-tenant-app-layout>

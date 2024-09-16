@@ -1,4 +1,4 @@
-<!-- resources/views/tenants/index.blade.php -->
+<!-- resources/views/services/index.blade.php -->
 <x-tenant-app-layout>
     <main class="bg-gray-100">
         <!-- Page Title -->
@@ -11,7 +11,7 @@
         <section class="my-12 px-6 lg:px-12">
             <h2 class="text-4xl font-semibold text-gray-800 text-center mb-6">Recommended Books</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                @foreach($recommendedBooks as $book)
+                @foreach($popularBooks as $book)
                     <x-tenants.partials._bookcard :book="$book"/>
                 @endforeach
             </div>
@@ -29,9 +29,9 @@
             @endphp
             <x-tenants.partials._slider>
                 @foreach($bookGroups as $group)
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 gap-2">
                         @foreach($group as $book)
-                            <div class="w-60">
+                            <div class="flex-1 w-60">
                                 <x-tenants.partials._bookcard :book="$book"/>
                             </div>
                         @endforeach

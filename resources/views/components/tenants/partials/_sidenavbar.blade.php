@@ -9,7 +9,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('landlord.dashboard')}}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-200 rounded {{url()->current() === route('landlord.dashboard')?'bg-gray-200':''}}">
+                        <a href="{{route('dashboard')}}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-200 rounded {{url()->current() === route('landlord.dashboard')?'bg-gray-200':''}}">
                             <x-heroicon-s-server-stack class="w-8 h-8"/>
                             <span class="hidden md:block">Dashboard</span>
                         </a>

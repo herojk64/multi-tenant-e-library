@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enum\ServicesStatusType;
 use App\Enum\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,4 +62,22 @@ class User extends Authenticatable
     public function tenants(){
         return $this->hasMany(Tenant::class,'user_id');
     }
+
+    public function services()
+    {
+        return $this->hasMany(UserServices::class,'user_id');
+    }
+
+    public function getStatusAttribute(): bool
+    {
+        return $this->services()->where('status', ServicesStatusType::ACTIVE)->exists();
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class,'user_id');
+    }
+
+
+
 }

@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->longText('description');
+            $table->enum('type', ['yearly', 'monthly']);
+            $table->bigInteger('duration');
             $table->bigInteger('amount');
             $table->bigInteger('discount');
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Settings extends Model
 {
@@ -44,5 +45,18 @@ class Settings extends Model
             'string'=>$this->attributes['value'],
             default => (string) $this->attributes['value'],
         };
+    }
+
+    protected static function booted()
+    {
+        static::saved(function ($settings) {
+            // Clear the cache when a setting is created or updated
+            Cache::forget('tenant.settings');
+        });
+
+        static::deleted(function ($settings) {
+            // Clear the cache when a setting is deleted
+            Cache::forget('tenant.settings');
+        });
     }
 }

@@ -51,12 +51,12 @@ class ProfileDashboard extends Controller
 
     public function services()
     {
-        return view('landlord.profile.dashboard');
+        return view('tenants.profile.dashboard');
     }
 
     public function view(Tenant $tenant)
     {
-        return view('landlord.profile.services',[
+        return view('tenants.profile.services',[
             'tenant' => $tenant
         ]);
     }

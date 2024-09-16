@@ -1,4 +1,4 @@
-<div x-data="slider()" x-init="init()" class="relative w-screen overflow-hidden px-6">
+<div x-data="slider()" x-init="init()" class="relative w-[99vw] overflow-hidden px-4">
     <!-- Slider Container -->
     <div x-ref="slidesContainer" class="flex space-x-4 overflow-x-auto scroll-smooth pb-5">
         {{ $slot }}

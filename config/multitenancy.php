@@ -29,7 +29,7 @@ return [
     ],
 
     /*
-     * These tasks will be performed when switching tenants.
+     * These tasks will be performed when switching services.
      *
      * A valid task is any class that implements Spatie\Multitenancy\Tasks\SwitchTenantTask
      */
@@ -40,7 +40,7 @@ return [
     ],
 
     /*
-     * This class is the model used for storing configuration on tenants.
+     * This class is the model used for storing configuration on services.
      *
      * It must be or extend `Spatie\Multitenancy\Models\Tenant::class`
      */

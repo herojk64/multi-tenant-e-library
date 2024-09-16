@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class ServicesChart extends ChartWidget
 {
-    protected static ?string $heading = 'Services';
+    protected static ?string $heading = 'ServicesReview';
 
     protected static ?string $description = "Prices of services during a year";
 
