@@ -36,13 +36,14 @@ class AppServiceProvider extends ServiceProvider
         DB::setDefaultConnection($type);
 
         if ($type === "tenant") {
-            $this->loadTenantSettings();
 
-            $setting = Cache::get('tenant.settings');
+            $settings = Settings::all()->pluck('value', 'key');
 
-            if ($setting && $setting['site_name']) {
+            if ($settings->has('site_name') && $settings->has('contact_email') && $settings->has('contact_number')) {
                 config([
-                    'app.name' => $setting['site_name'], // Update the app name configuration
+                    'app.name' => $settings['site_name'], // Set app name
+                    'app.contact_email' => $settings['contact_email'],
+                    'app.contact_number' => $settings['contact_number'],
                 ]);
             }
         }
@@ -50,15 +51,6 @@ class AppServiceProvider extends ServiceProvider
         $this->setGates();
     }
 
-    protected function loadTenantSettings(): void
-    {
-        // Try to fetch settings from the cache; if not available, load from DB
-        Cache::remember('tenant.settings', 3600, function () {
-            return Settings::all()->pluck('value', 'key');
-        });
-
-
-    }
 
     public function checkTenantActive()
     {

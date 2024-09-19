@@ -27,17 +27,17 @@
         <div>
             <header class="mb-3 text-xl font-bold text-gray-500">Support</header>
             <ul>
-                @if(cache('tenant.settings')['contact_email'])
+                @if(config('app.contact_email'))
                 <li class="w-full">
-                    <a href="mailto:herojk64@gmail.com" class="py-3 block text-gray-500 hover:text-gray-800 underline">
-                        Email Support : {{cache('tenant.settings')['contact_email']}}
+                    <a href="mailto:{{config('app.contact_email')}}" class="py-3 block text-gray-500 hover:text-gray-800 underline">
+                        Email Support : {{config('app.contact_email')}}
                     </a>
                 </li>
                 @endif
-                @if(cache('tenant.settings')['contact_number'])
+                @if(config('app.contact_number'))
                 <li class="w-full">
-                    <a href="tel:{{cache('tenant.settings')['contact_number']}}" class="py-3 block text-gray-500 hover:text-gray-800 underline">
-                        Call Us: {{cache('tenant.settings')['contact_number']}}
+                    <a href="tel:{{config('app.contact_number')}}" class="py-3 block text-gray-500 hover:text-gray-800 underline">
+                        Call Us: {{config('app.contact_number')}}
                     </a>
                 </li>
                     @endif

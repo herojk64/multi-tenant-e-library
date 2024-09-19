@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\AdminPanelResource\Widgets\InactiveTenantAlert;
 use App\Filament\Resources\AdminPanelResource\Widgets\ServicesChart;
 use App\Filament\Resources\AdminPanelResource\Widgets\TenantPending;
 use App\Filament\Resources\Landlord\LandlordServicesResource;
@@ -50,8 +51,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+//                InactiveTenantAlert::class,
                 ServicesChart::class,
-                TenantPending::class
+                TenantPending::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -68,6 +70,7 @@ class AdminPanelProvider extends PanelProvider
                 LandlordPannelMiddleware::class,
                 Authenticate::class,
             ])
+            ->darkMode(false)
             ;
     }
 }

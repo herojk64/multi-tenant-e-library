@@ -26,9 +26,6 @@
             <li>
                 <x-tenants.partials._navlink :route="route('books')">Books</x-tenants.partials._navlink>
             </li>
-            <li>
-                <x-tenants.partials._navlink :route="route('landlord.about')">About Us</x-tenants.partials._navlink>
-            </li>
             @guest
                 <li>
                     <button class="">
@@ -122,13 +119,6 @@
                             :route="route('books')"
                             class="text-center w-full hover:border-b-transparent border-0 bg-gray-50 active:border-b-transparent active:bg-gray-300 active:text-gray-800 rounded border-b-transparent"
                         >Books
-                        </x-landlord.partials._navlink>
-                    </li>
-                    <li>
-                        <x-landlord.partials._navlink
-                            :route="route('about')"
-                            class="text-center w-full hover:border-b-transparent border-0 bg-gray-50 active:border-b-transparent active:bg-gray-300 active:text-gray-800 rounded border-b-transparent"
-                        >About Us
                         </x-landlord.partials._navlink>
                     </li>
                     @guest

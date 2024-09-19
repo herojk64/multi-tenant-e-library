@@ -19,23 +19,30 @@ class ServicesChart extends ChartWidget
 
 
         return [
-            'datasets'=>[
+            'datasets' => [
                 [
-                'label'=>'Total',
-                'data'=>$tenant_services->map(fn($record)=>$record->total)
-            ],
-                [
-                    'label'=>'Amount',
-                    'data'=>$tenant_services->map(fn($record)=>$record->amount),
-                    'color'=>'yellow'
+                    'label' => 'Total',
+                    'data' => $tenant_services->map(fn($record) => $record->total),
+                    'backgroundColor' => 'rgba(75, 192, 192, 0.2)', // Light green
+                    'borderColor' => 'rgba(75, 192, 192, 1)', // Dark green
+                    'borderWidth' => 1
                 ],
                 [
-                    'label'=>'Discount',
-                    'data'=>$tenant_services->map(fn($record)=>$record->discount),
-                    'color'=>'yellow'
+                    'label' => 'Amount',
+                    'data' => $tenant_services->map(fn($record) => $record->amount),
+                    'backgroundColor' => 'rgba(255, 159, 64, 0.2)', // Light orange
+                    'borderColor' => 'rgba(255, 159, 64, 1)', // Dark orange
+                    'borderWidth' => 1
+                ],
+                [
+                    'label' => 'Discount',
+                    'data' => $tenant_services->map(fn($record) => $record->discount),
+                    'backgroundColor' => 'rgba(153, 102, 255, 0.2)', // Light purple
+                    'borderColor' => 'rgba(153, 102, 255, 1)', // Dark purple
+                    'borderWidth' => 1
                 ]
-                ],
-            'labels'=>$tenant_services->map(fn($reccord)=>Carbon::make($reccord['created_at'])->format('Y-m-d'))
+            ],
+            'labels' => $tenant_services->map(fn($record) => Carbon::make($record->created_at)->format('Y-m-d'))
         ];
     }
 

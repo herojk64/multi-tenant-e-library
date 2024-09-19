@@ -30,17 +30,24 @@ class Books extends Model
 
     public function bayesianRating()
     {
-        $globalAverageRating = Rating::avg('rating');  // Global average rating across all books
+        $globalAverageRating = Rating::avg('rating') ?? 0;  // Global average rating, default to 0 if no ratings
         $minimumRatingsForReliability = 5; // Minimum number of ratings required to be considered reliable
         $bookAverageRating = $this->averageRating(); // Average rating for this specific book
+//        dd($bookAverageRating);
         $bookRatingCount = $this->rating()->count(); // Number of ratings this book has
 
-        // Bayesian formula: (bookRatingCount / (bookRatingCount + minimumRatingsForReliability)) * bookAverageRating
-        //                 + (minimumRatingsForReliability / (bookRatingCount + minimumRatingsForReliability)) * globalAverageRating
-        $bayesianScore =  ($bookRatingCount / ($bookRatingCount + $minimumRatingsForReliability)) * $bookAverageRating
+        // If there are no ratings, return 0
+        if ($bookRatingCount === 0) {
+            return 0;
+        }
+
+        // Bayesian formula
+        $bayesianScore = ($bookRatingCount / ($bookRatingCount + $minimumRatingsForReliability)) * $bookAverageRating
             + ($minimumRatingsForReliability / ($bookRatingCount + $minimumRatingsForReliability)) * $globalAverageRating;
-        return round($bayesianScore,1);
+
+        return round($bayesianScore, 1);
     }
+
 
 
 

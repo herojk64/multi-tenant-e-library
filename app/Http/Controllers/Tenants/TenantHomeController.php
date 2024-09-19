@@ -16,7 +16,7 @@ class TenantHomeController extends Controller
             ->sortByDesc(function ($book) {
                 return $book->bayesianRating();
             })
-            ->take(5);;
+            ->take(5);
 
         // Fetch a paginated list of books to display on the home page
         $books = Books::inRandomOrder()->limit(20)->get();

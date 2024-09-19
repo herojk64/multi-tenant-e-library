@@ -13,14 +13,39 @@ class TenantPending extends ChartWidget
     protected function getData(): array
     {
         $tenants = Tenant::all();
+
+        // Initialize counters
+        $activeCount = 0;
+        $inactiveCount = 0;
+        $expiredCount = 0;
+
+        // Count tenants based on their status
+        foreach ($tenants as $tenant) {
+            switch ($tenant->status) {
+                case 'Active':
+                    $activeCount++;
+                    break;
+                case 'Inactive':
+                    $inactiveCount++;
+                    break;
+                case 'Expired':
+                    $expiredCount++;
+                    break;
+            }
+        }
+
         return [
-            'datasets'=>[
+            'datasets' => [
                 [
-                'data'=>[$tenants->filter(fn($value)=>$value->is_active)->count(),$tenants->filter(fn($value)=>!$value->is_active)->count()],
-                    'color'=>'success'
-            ]
+                    'data' => [$activeCount, $inactiveCount, $expiredCount],
+                    'backgroundColor' => [
+                        'rgba(76, 175, 80, 0.5)', // Light green with 50% opacity
+                        'rgba(244, 67, 54, 0.5)', // Light red with 50% opacity
+                        'rgba(255, 193, 7, 0.5)'  // Light yellow with 50% opacity
+                    ],
                 ],
-                    'labels'=>['Active','In Active']
+            ],
+            'labels' => ['Active', 'Inactive', 'Expired'],
         ];
     }
 

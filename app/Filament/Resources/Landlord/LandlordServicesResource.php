@@ -18,7 +18,7 @@ class LandlordServicesResource extends Resource
     protected static ?string $model = LandlordServices::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
-    protected static ?string $label = 'ServicesReview';
+    protected static ?string $label = 'Services';
 
     public static function form(Form $form): Form
     {

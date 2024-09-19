@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'contact_email'=>null,
+    'contact_number'=>null,
     'author'=>env('APP_AUTHOR','Author'),
 
     /*

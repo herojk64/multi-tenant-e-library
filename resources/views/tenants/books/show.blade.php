@@ -11,7 +11,7 @@
             <div class="w-full lg:w-2/3">
                 <h1 class="text-4xl font-semibold mb-4 text-gray-800">{{ $book->title }}</h1>
                 <p class="text-xl text-gray-600 mb-4">by {{ $book->author_name }}</p>
-                <p class="text-md text-gray-600 mb-4">Rating: {{$book->averageRating()}}</p>
+                <p class="text-md text-gray-600 mb-4">Rating: {{$book->bayesianRating()}}</p>
                 <p class="text-gray-800 mb-6">{{ $book->description }}</p>
 
                 @can('view-content', $book)
