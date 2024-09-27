@@ -48,6 +48,13 @@ class Books extends Model
         return round($bayesianScore, 1);
     }
 
+    public function views()
+    {
+        return $this->belongsToMany(User::class, 'book_user_views')
+            ->withTimestamps()
+            ->withPivot('viewed_at');
+    }
+
 
 
 

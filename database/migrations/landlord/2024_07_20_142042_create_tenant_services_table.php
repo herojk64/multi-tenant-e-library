@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tenant_services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tenant_id');
+            $table->foreignId('tenant_id')->constrained('tenants');
             $table->string('title');
             $table->longText('description');
             $table->enum('type',['yearly','monthly']);

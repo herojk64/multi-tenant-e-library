@@ -78,6 +78,18 @@ class User extends Authenticatable
         return $this->hasMany(Rating::class,'user_id');
     }
 
+    public function searchLogs()
+    {
+        return $this->hasMany(SearchLog::class);
+    }
+
+    public function viewedBooks()
+    {
+        return $this->belongsToMany(Books::class, 'book_user_views')
+            ->withTimestamps()
+            ->withPivot('viewed_at');
+    }
+
 
 
 }

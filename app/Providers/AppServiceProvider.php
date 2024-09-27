@@ -38,10 +38,9 @@ class AppServiceProvider extends ServiceProvider
         if ($type === "tenant") {
 
             $settings = Settings::all()->pluck('value', 'key');
-
             if ($settings->has('site_name') && $settings->has('contact_email') && $settings->has('contact_number')) {
                 config([
-                    'app.name' => $settings['site_name'], // Set app name
+                    'app.name' => empty($settings['site_name']) ?config('app.name'):$settings['site_name'], // Set app name
                     'app.contact_email' => $settings['contact_email'],
                     'app.contact_number' => $settings['contact_number'],
                 ]);

@@ -18,6 +18,14 @@ class BooksController extends Controller
     {
         $filePath = $book->file; // This should be something like 'books/xyz.pdf'
         $url = $this->generateBlobUrl($filePath);
+        if (auth()->check()) {
+            $userId = auth()->id();
+
+            // Check if the user has already viewed the book
+            if (!$book->views()->where('user_id', $userId)->exists()) {
+                $book->views()->attach($userId, ['viewed_at' => now()]);
+            }
+        }
         return view('tenants.books.show', compact('book', 'url'));
     }
 

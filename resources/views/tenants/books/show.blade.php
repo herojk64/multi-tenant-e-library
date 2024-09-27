@@ -14,9 +14,6 @@
                 <p class="text-md text-gray-600 mb-4">Rating: {{$book->bayesianRating()}}</p>
                 <p class="text-gray-800 mb-6">{{ $book->description }}</p>
 
-                @can('view-content', $book)
-
-                @endcan
 
 
                 <div class="flex gap-4">
@@ -83,8 +80,6 @@
                             document: url,
                             baseUrl: baseUrl
                         }).then(function (instance) {
-                            console.log('PSPDFKit loaded', instance);
-
                             // Customize toolbar and view state
                             instance.setViewState((state) => {
                                 return state

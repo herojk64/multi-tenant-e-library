@@ -17,11 +17,6 @@
 {{--                        ServicesReview--}}
 {{--                    </a>--}}
 {{--                </li>--}}
-                <li class="w-full">
-                    <a href="{{route('about')}}" class="py-3 block md:text-center text-gray-500 active:text-gray-800 hover:text-gray-800 underline">
-                        About Us
-                    </a>
-                </li>
             </ul>
         </nav>
         <div>
