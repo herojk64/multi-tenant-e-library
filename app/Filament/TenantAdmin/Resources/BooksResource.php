@@ -55,6 +55,7 @@ class BooksResource extends Resource
                             ->disk('public')
                             ->openable()
                             ->columnSpan(2)
+                            ->maxSize(300000)
                         ->previewable()
                         ,
                         Forms\Components\FileUpload::make('thumbnail')
@@ -65,6 +66,7 @@ class BooksResource extends Resource
                             ->openable()
                             ->directory('thumbnails')
                             ->disk('public')
+                            ->maxSize(300000)
                     ])
 
                 ]),
