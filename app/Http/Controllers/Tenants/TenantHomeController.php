@@ -43,36 +43,43 @@ class TenantHomeController extends Controller
         // Step 1: Fetch all popular search terms
         $popularSearchTerms = SearchLog::calculatePopularSearches();
 
+        if (empty($popularSearchTerms)) {
+            return collect(); // Return an empty collection instead of null
+        }
+
         // Step 2: Fetch books in one query, matching the popular search terms and including view counts
-        return Books::withCount('views') // Fetch view count
+        return Books::withCount('views') // Fetch view count only once
         ->where(function ($query) use ($popularSearchTerms) {
             foreach ($popularSearchTerms as $term) {
-                $query->orWhere('title', 'like', '%' . $term . '%'); // Match any search term
+                if ($term) {
+                    $query->orWhere('title', 'like', '%' . $term . '%'); // Match any search term
+                }
             }
         })
-            ->withCount('views') // Count the views
             ->limit($limit)
-            ->get()
-            ; // Fetch the books
+            ->get(); // Fetch the books
     }
-
-
 
     public function getRecomendedBooks(int $limit = 5)
     {
-        // Step 1: Fetch all popular search terms
+        // Step 1: Fetch all popular search terms for the authenticated user or based on their IP
         $popularSearchTerms = SearchLog::calculateUserPopularSearches();
 
+        if (empty($popularSearchTerms)) {
+            return collect(); // Return an empty collection instead of null
+        }
+
         // Step 2: Fetch books in one query, matching the popular search terms and including view counts
-        return Books::withCount('views') // Fetch view count
+        return Books::withCount('views') // Fetch view count only once
         ->where(function ($query) use ($popularSearchTerms) {
             foreach ($popularSearchTerms as $term) {
-                $query->orWhere('title', 'like', '%' . $term . '%'); // Match any search term
+                if ($term) {
+                    $query->orWhere('title', 'like', '%' . $term . '%'); // Match any search term
+                }
             }
         })
-            ->withCount('views') // Count the views
             ->limit($limit)
-            ->get()
-            ; // Fetch the books
+            ->get(); // Fetch the books
     }
+
 }
