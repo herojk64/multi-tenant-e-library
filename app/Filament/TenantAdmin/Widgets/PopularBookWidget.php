@@ -8,6 +8,8 @@ use Filament\Widgets\ChartWidget;
 class PopularBookWidget extends ChartWidget
 {
     protected static ?string $heading = 'Chart';
+    protected array $colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'];
+
 
     protected function getData(): array
     {
@@ -20,7 +22,7 @@ class PopularBookWidget extends ChartWidget
             'datasets' => [
                 [
                     'data' => $books->map(fn($book) => $book->bayesianRating())->toArray(),
-                    'backgroundColor' => $books->map(fn($book) => $this->getColor())->toArray(),
+                    'backgroundColor' => $books->map(fn($book,$ind) => $this->colors[$ind])->toArray(),
                 ],
             ],
             'labels' => $books->pluck('title')->toArray(),
@@ -30,11 +32,5 @@ class PopularBookWidget extends ChartWidget
     protected function getType(): string
     {
         return 'pie';
-    }
-
-    public function getColor(): string
-    {
-        $colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'];
-        return $colors[array_rand($colors)];
     }
 }

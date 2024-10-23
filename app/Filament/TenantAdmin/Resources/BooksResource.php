@@ -28,17 +28,17 @@ class BooksResource extends Resource
             ->schema([
                 Forms\Components\Section::make([
 
-                    Forms\Components\TextInput::make('title'),
-                    Forms\Components\Textarea::make('description')->rows(5),
+                    Forms\Components\TextInput::make('title')->required(),
+                    Forms\Components\Textarea::make('description')->rows(5)->required(),
                     Forms\Components\Grid::make(2)->schema([
 
-                        Forms\Components\TextInput::make('author_name')->label('Author Name'),
-                        Forms\Components\DatePicker::make('published_date')->label('Published Date'),
+                        Forms\Components\TextInput::make('author_name')->label('Author Name')->required(),
+                        Forms\Components\DatePicker::make('published_date')->label('Published Date')->required(),
                     ]),
                     Forms\Components\Grid::make(2)->schema([
                         Forms\Components\Select::make('category_id')
                             ->label('Category')
-                            ->relationship('category', 'name')
+                            ->relationship('category', 'name')->required()
                         ,
                         Forms\Components\Select::make('type')
                             ->options([
@@ -46,6 +46,7 @@ class BooksResource extends Resource
                                 BookType::SUBSCRIBED->value => Str::headline(BookType::SUBSCRIBED->value)
                             ])
                             ->label('Type')
+                            ->required()
                     ]),
                     Forms\Components\Grid::make(2)->schema([
                         Forms\Components\FileUpload::make('file')
@@ -55,8 +56,10 @@ class BooksResource extends Resource
                             ->disk('public')
                             ->openable()
                             ->columnSpan(2)
+                            ->minSize(512)
                             ->maxSize(300000)
                         ->previewable()
+                        ->required()
                         ,
                         Forms\Components\FileUpload::make('thumbnail')
                         ->image()
@@ -66,6 +69,7 @@ class BooksResource extends Resource
                             ->openable()
                             ->directory('thumbnails')
                             ->disk('public')
+                            ->minSize(512)
                             ->maxSize(300000)
                     ])
 

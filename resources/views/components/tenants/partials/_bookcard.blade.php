@@ -1,7 +1,7 @@
 <!-- resources/views/partials/_bookcard.blade.php -->
 <a href="{{route('books.show',$book)}}" class="block bg-white shadow-md rounded-lg overflow-hidden relative no-underline hover:no-underline group">
     <div class="relative overflow-hidden h-56">
-        <img src="{{ asset('storage/'.$book->thumbnail) ?? asset('images/default-book.png') }}" loading="lazy" alt="{{ $book->title }}" class="w-full h-56 object-cover transition-transform duration-300 transform hover:absolute hover:scale-110">
+        <img src="{{ asset('storage/'.$book->thumbnail) ?? asset('images/default.jpg') }}" loading="lazy" alt="{{ $book->title }}" class="w-full h-56 object-cover transition-transform duration-300 transform hover:absolute hover:scale-110">
     </div>
     <div class="p-4">
         <h2 class="text-xl font-semibold text-gray-800 truncate">{{ $book->title }}</h2>
