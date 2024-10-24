@@ -43,6 +43,7 @@
                     </div>
 
                     <div id="pspdfkit-container" data-url="{{ $url }}" style="width: 100%; height: 600px;"></div>
+                    <a href="{{ route('books.read',$book) }}" target="_blank" class="text-center mt-4 block text-blue-600 hover:underline">Read books in new tab</a>
                 @else
                     <p class="text-gray-500">No PDF available for this book.</p>
                 @endif

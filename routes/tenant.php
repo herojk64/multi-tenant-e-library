@@ -11,6 +11,7 @@ Route::controller(\App\Http\Controllers\Tenants\BooksController::class)->group(f
     // web.php
 
     Route::get('/books/{book}', 'show')->name('books.show');
+    Route::get('/books/read/{book}', 'read')->name('books.read');
     Route::get('/books/pdf/{file}',  'generateBlob')->name('books.generateBlob');
 
 });

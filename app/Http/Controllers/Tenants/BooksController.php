@@ -29,6 +29,13 @@ class BooksController extends Controller
         return view('tenants.books.show', compact('book', 'url'));
     }
 
+    public function read(Books $book){
+        $filePath = $book->file; // This should be something like 'books/xyz.pdf'
+        $url = $this->generateBlobUrl($filePath);
+
+        return view('tenants.books.read', compact('book', 'url'));
+    }
+
     private function generateBlobUrl($filePath)
     {
         if (Storage::disk('public')->exists($filePath)) {
